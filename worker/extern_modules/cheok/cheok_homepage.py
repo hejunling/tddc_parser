@@ -25,7 +25,7 @@ class CheokHomepage(ParseRuleBase):
 
     def _parse(self):
         self._make_want_buy_list_urls()
-        self.tasks = self.tasks[0:85]
+        self.tasks = self.tasks[0:15]
 
     def _make_want_buy_list_urls(self):
         page_numbers = self._doc.xpath('//*[@class="num"]/text()')

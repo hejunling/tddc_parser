@@ -21,8 +21,12 @@ class ParserSite(conf.SiteBase):
     # Parse Event Topic Info
     EVENT_TOPIC = 'tddc_p_event'
 
-    # Parse Task Topic Info
-    PARSE_TOPIC_GROUP = 'tddc.p.parser'
+    # Task Input Topic Info
+    TASK_INPUT_TOPIC = 'tddc_parse'
+    TASK_INPUT_TOPIC_GROUP = 'tddc.p.parser'
+
+    # Task Output Topic Info
+    TASK_OUTPUT_TOPIC = 'tddc_crawl'
     
     # Parser Concurrent
     FETCH_SOURCE_CONCURRENT = 8

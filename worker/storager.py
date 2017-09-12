@@ -30,11 +30,11 @@ class ParseStorager(StoragerBase):
 
     @staticmethod
     def pull(self, task):
-        ParserQueues.PARSE.put(task)
+        ParserQueues.TASK_INPUT.put(task)
 
     def _pull(self):
         while True:
-            task = ParserQueues.PARSE.get()
+            task = ParserQueues.TASK_INPUT.get()
             if not task:
                 continue
             if not task.platform or not task.row_key:
@@ -46,7 +46,7 @@ class ParseStorager(StoragerBase):
                                                    'source',
                                                    'content')
             if not success:
-                ParserQueues.PARSE.put(task)
+                ParserQueues.TASK_INPUT.put(task)
                 gevent.sleep(1)
                 continue
             if not ret:
