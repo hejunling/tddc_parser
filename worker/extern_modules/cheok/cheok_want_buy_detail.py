@@ -27,14 +27,3 @@ class CheokWantBuyDetail(ParseRuleBase):
         tmp = self._xpath('//*[@class="show-car-det"]//*[@class="title"]/span/text()')
         title = tmp[0].encode('utf-8')
         self.items['title'] = title
-
-
-def main():
-    from common.models import Task
-    task = Task()
-    with open('cheok_detail.html', 'r') as f:
-        task.__dict__ = {'body': f.read()}
-    CheokWantBuyDetail(task)
-    
-if __name__ == '__main__':
-    main()

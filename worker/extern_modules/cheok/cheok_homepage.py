@@ -21,7 +21,7 @@ class CheokHomepage(ParseRuleBase):
 
     feature = 'cheok.homepage'
     
-    version = '1495799999'
+    version = '1495799988'
 
     def _parse(self):
         self._make_want_buy_list_urls()
@@ -32,7 +32,6 @@ class CheokHomepage(ParseRuleBase):
         if len(page_numbers):
             last_page_number = int(page_numbers[-1].encode('utf-8'))
             cur_time = time.time() * 1000
-#             cur_time = 1494926880 * 1000
             base_url = 'http://www.cheok.com/interfaces/0/0/0/0/cp_%d?bust=%d'
             tmp = list()
             for page_number in range(1, last_page_number+1):

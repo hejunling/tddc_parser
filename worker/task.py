@@ -32,8 +32,15 @@ class ParseTaskManager(TaskManagerBase):
                            Task.Status.WAIT_PARSE,
                            Task.Status.CRAWL_SUCCESS)
 
-    def pushhing(self, task):
+    def ready_to_push(self, task):
 #         if not self._filter.setget(task.url):
 #             TDDCLogging.debug('New Task [%s:%s] Was Filter.' % (task.platform, task.url))
 #             return False
+#         self.create_record(task)
         return True
+
+    def pushed(self, task):
+        self.update_status(task,
+                           Task.Status.CRAWL_TOPIC,
+                           None)
+    

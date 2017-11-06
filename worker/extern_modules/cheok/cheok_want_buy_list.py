@@ -19,7 +19,7 @@ class CheokWantBuyList(ParseRuleBase):
 
     feature = 'cheok.want_buy_list'
     
-    version = '1495799999'
+    version = '1495799977'
 
     def _parse(self):
         if self._body_type != self.JSON:

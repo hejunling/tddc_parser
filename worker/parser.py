@@ -30,7 +30,7 @@ class Parser(object):
     def _parse(self):
         while True:
             task, body = ParserQueues.WAITING_PARSE.get()
-            cls = PackagesManager().get_parse_model(task.platform, task.feature)
+            cls = PackagesManager().get_model(task.platform, task.feature)
             if not cls:
                 fmt = 'Parse No Match: [P:{platform}][F:{feature}][K:{row_key}]'
                 TDDCLogging.warning(fmt.format(platform=task.platform,
@@ -43,6 +43,7 @@ class Parser(object):
             try:
                 ret = cls(task, body)
             except Exception, e:
+                TDDCLogging.error('[%s][%s][%s]' % (task.platform, task.row_key, task.feature))
                 TDDCLogging.error(e)
                 ParserQueues.TASK_STATUS.put((task,
                                               Task.Status.PARSE_FAILED,
