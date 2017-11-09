@@ -5,8 +5,6 @@ Created on 2017年4月18日
 @author: chenyitao
 '''
 
-from tddc.common.models import Task
-
 from ..parse_rule_base import ParseRuleBase
 
 

@@ -9,8 +9,10 @@ import hashlib
 from lxml import html
 import json
 
+from tddc import ExternBase
 
-class ParseRuleBase(object):
+
+class ParseRuleBase(ExternBase):
     '''
     classdocs
     '''
@@ -19,17 +21,11 @@ class ParseRuleBase(object):
     
     HTML = 'HTML'
 
-    platform = ''
-
-    feature = ''
-    
-    version = 'unknow'
-
     def __init__(self, task, body):
         '''
         Constructor
         '''
-        self.platform
+        super(ParseRuleBase, self).__init__()
         self._task = task
         self._body = body
         self._body_type = None
@@ -39,8 +35,8 @@ class ParseRuleBase(object):
         if body[0] == '{' and body[-1] == '}' or body[0] == '[' and body[-1] == ']':
             try:
                 self._json_dict = json.loads(body)
-            except Exception, e:
-                print(e)
+            except Exception as e:
+                self.exception(e)
             else:
                 self._body_type = self.JSON
         else:
@@ -60,10 +56,3 @@ class ParseRuleBase(object):
         if self._body_type == self.JSON:
             return self._json_dict.get(key, default)
         return None
-
-
-def main():
-    pass
-    
-if __name__ == '__main__':
-    main()
