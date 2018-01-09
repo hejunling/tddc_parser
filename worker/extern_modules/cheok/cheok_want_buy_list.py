@@ -45,13 +45,3 @@ class CheokWantBuyList(ParseRuleBase):
                 self._md5_mk.update(url)
                 task.row_key = self._md5_mk.hexdigest()
                 self.tasks.append(task)
-      
-        
-def main():
-    task = Task()
-    with open('cheok_list.html', 'r') as f:
-        task.__dict__ = {'body': f.read()}
-    CheokWantBuyList(task)
-
-if __name__ == '__main__':
-    main()

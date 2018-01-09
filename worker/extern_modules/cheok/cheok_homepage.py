@@ -46,14 +46,3 @@ class CheokHomepage(ParseRuleBase):
                 if page_number % 100 == 0 or page_number == last_page_number:
                     self.tasks.extend(tmp)
                     tmp = list()
-
-
-def main():
-    task = Task()
-    with open('cheok.html', 'r') as f:
-        task.__dict__ = {'body': f.read()}
-    ret = CheokHomepage(task)
-    print(len(ret.tasks))
-
-if __name__ == '__main__':
-    main()

@@ -5,11 +5,9 @@ Created on 2017年4月13日
 @author: chenyitao
 '''
 
-import time
 
-from tddc import ShortUUID
+from tddc import ShortUUID, TaskStatus
 
-from worker.task import TaskStatus
 from ..parse_rule_base import ParseRuleBase
 
 
@@ -27,7 +25,7 @@ class CheokBuyCar(ParseRuleBase):
     def _parse(self):
         self._car_list_pages_task()
         self._detail_task()
-        self.tasks = self.tasks[60:80]
+        # self.tasks = self.tasks[60:80]
 
     def _car_list_pages_task(self):
         cur_page = self._xpath('//*[@class="num curr"]/text()')
@@ -50,6 +48,7 @@ class CheokBuyCar(ParseRuleBase):
             task.row_key = self._md5_mk.hexdigest()
             task.cur_status = TaskStatus.CrawlTopic
             task.pre_status = task.cur_status
+            task.proxy_type = 'ADSL'
             self.tasks.append(task)
 
     def _detail_task(self):
@@ -65,4 +64,5 @@ class CheokBuyCar(ParseRuleBase):
             task.row_key = self._md5_mk.hexdigest()
             task.cur_status = TaskStatus.CrawlTopic
             task.pre_status = task.cur_status
+            task.proxy_type = 'ADSL'
             self.tasks.append(task)

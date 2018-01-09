@@ -11,15 +11,10 @@ import setproctitle
 gevent.monkey.patch_all()
 
 
-from tddc import WorkerManager, Storager
+from tddc import WorkerManager, Storager, TaskManager
 
 from config import ConfigCenterExtern
-from worker.task import TaskManager
-
 from worker.parser import Parser
-# from worker.storager import ParseStorager
-# from worker.task import ParseTaskManager
-# from worker.common.event import TDDCEventType
 
 
 class ParserManager(WorkerManager):

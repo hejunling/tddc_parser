@@ -6,9 +6,10 @@ Created on 2017年4月11日
 '''
 
 import gevent
-from tddc import TDDCLogger, ExternManager, HBaseManager, Storager
+import time
+from tddc import TDDCLogger, ExternManager, Storager, TaskManager, TaskStatus, RecordManager, object2json, StatusManager
 
-from worker.task import TaskManager, TaskStatus
+from config import ConfigCenterExtern
 
 
 class Parser(TDDCLogger):
@@ -34,13 +35,13 @@ class Parser(TDDCLogger):
                 task.cur_status, task.pre_status = TaskStatus.ParseModuleNotFound, task.cur_status
                 TaskManager().task_failed(task)
                 continue
-            HBaseManager().get_async(self._parsing,
-                                     task.platform,
-                                     task.row_key,
-                                     'source',
-                                     'content',
-                                     task=task,
-                                     cls=cls)
+            Storager().get_async(self._parsing,
+                                 task.platform,
+                                 task.row_key,
+                                 'source',
+                                 'content',
+                                 task=task,
+                                 cls=cls)
 
     def _parsing(self, data, task, cls):
         ret = None
@@ -59,22 +60,27 @@ class Parser(TDDCLogger):
             task.cur_status, task.pre_status = TaskStatus.ParsedFailed, task.cur_status
             TaskManager().task_failed(task)
             return
-        self._storage(task, ret.items)
-        self._push_new_task(task, ret.tasks)
+        if ret.items:
+            Storager().storage(ret.items)
+        if ret.tasks:
+            self._push_new_task(task, ret.tasks)
         task.cur_status, task.pre_status = TaskStatus.ParsedSuccess, task.cur_status
-        TaskManager().task_successed(task,
-                                     None)
-
-    def _storage(self, task, items):
-        if not len(items):
-            return
+        TaskManager().task_successed(task)
 
     def _push_new_task(self, task, tasks):
-        if not len(tasks):
-            return
+        if len(tasks):
+            name = '%s:%s' % (ConfigCenterExtern().get_task().record_key_base,
+                              task.platform)
+            records = {record.id: object2json(record) for record in tasks}
+            RecordManager().create_records(name, records)
+            cur_time = time.time()
+            name = '%s:%s:%d' % (ConfigCenterExtern().get_task().status_key_base,
+                                 task.platform,
+                                 TaskStatus.CrawlTopic)
+            status = {record.id: cur_time for record in tasks}
+            StatusManager().set_multi_status(name, status)
         for new_task in tasks:
-            TaskManager().push_task(new_task,
-                                    'tddc_crawl')
+            TaskManager().push_task(new_task, 'tddc_crawl', False)
         self.debug('[%s:%s] Generate %d New Task.' % (task.platform,
                                                       task.id,
                                                       len(tasks)))
