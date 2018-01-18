@@ -22,13 +22,8 @@ class ParserManager(WorkerManager):
     def __init__(self):
         super(ParserManager, self).__init__()
         self.info('Parser Is Starting')
-        Storager()
         TaskManager()
-        # EventCenter().register(TDDCEventType.Parser.MODULES_UPDATE,
-        #                        PackagesManager()._models_update_event)
-        # self._storager = ParseStorager(ParserSite.random_hbase_node())
         Parser()
-        # self._task_manager = ParseTaskManager()
         self.info('Parser Was Ready.')
     
     @staticmethod
