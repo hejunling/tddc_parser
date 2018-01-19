@@ -20,14 +20,16 @@ class CheokBuyCar(ParseRuleBase):
 
     feature = 'cheok.buycar'
 
-    version = '1495778901'
+    version = '14957789222'
 
     valid = '1'
+
+    test = 'xxxxxxxxx'
 
     def _parse(self):
         self._car_list_pages_task()
         self._detail_task()
-        self.tasks = self.tasks[60:80]
+        # self.tasks = self.tasks[60:80]
 
     def _car_list_pages_task(self):
         cur_page = self._xpath('//*[@class="num curr"]/text()')
@@ -46,8 +48,6 @@ class CheokBuyCar(ParseRuleBase):
             task.platform = self.platform
             task.feature = self.feature
             task.referer = self._task.url
-            self._md5_mk.update(url)
-            task.row_key = self._md5_mk.hexdigest()
             task.cur_status = TaskStatus.CrawlTopic
             task.pre_status = task.cur_status
             task.proxy_type = 'ADSL'
@@ -62,8 +62,6 @@ class CheokBuyCar(ParseRuleBase):
             task.platform = self.platform
             task.feature = 'cheok.car_detail'
             task.referer = self._task.url
-            self._md5_mk.update(url)
-            task.row_key = self._md5_mk.hexdigest()
             task.cur_status = TaskStatus.CrawlTopic
             task.pre_status = task.cur_status
             task.proxy_type = 'ADSL'

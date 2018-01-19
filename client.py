@@ -11,7 +11,7 @@ import setproctitle
 gevent.monkey.patch_all()
 
 
-from tddc import WorkerManager, Storager, TaskManager
+from tddc import WorkerManager, TaskManager
 
 from config import ConfigCenterExtern
 from worker.parser import Parser

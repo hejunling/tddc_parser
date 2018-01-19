@@ -37,7 +37,7 @@ class Parser(TDDCLogger):
                 continue
             Storager().get_async(self._parsing,
                                  task.platform,
-                                 task.row_key,
+                                 task.id,
                                  'source',
                                  'content',
                                  task=task,
@@ -68,19 +68,20 @@ class Parser(TDDCLogger):
         TaskManager().task_successed(task)
 
     def _push_new_task(self, task, tasks):
+        task_conf = ConfigCenterExtern().get_task()
         if len(tasks):
             name = '%s:%s' % (ConfigCenterExtern().get_task().record_key_base,
                               task.platform)
             records = {record.id: object2json(record) for record in tasks}
             RecordManager().create_records(name, records)
             cur_time = time.time()
-            name = '%s:%s:%d' % (ConfigCenterExtern().get_task().status_key_base,
+            name = '%s:%s:%d' % (task_conf.status_key_base,
                                  task.platform,
                                  TaskStatus.CrawlTopic)
             status = {record.id: cur_time for record in tasks}
             StatusManager().set_multi_status(name, status)
         for new_task in tasks:
-            TaskManager().push_task(new_task, 'tddc_crawl', False)
+            TaskManager().push_task(new_task, task_conf.producer_topic, False)
         self.debug('[%s:%s] Generate %d New Task.' % (task.platform,
                                                       task.id,
                                                       len(tasks)))
