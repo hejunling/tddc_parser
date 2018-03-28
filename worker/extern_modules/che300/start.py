@@ -5,11 +5,6 @@ Created on 2017年4月13日
 @author: chenyitao
 '''
 import json
-import time
-
-# from tddc.common.models import Task
-# from tddc.common import TDDCLogging
-
 from ..parse_rule_base import ParseRuleBase
 
 

@@ -6,10 +6,14 @@ Created on 2017年4月18日
 '''
 
 import hashlib
+import logging
+
 from lxml import html
 import json
 
 from tddc import ExternBase
+
+log = logging.getLogger(__name__)
 
 
 class ParseRuleBase(ExternBase):
@@ -36,7 +40,7 @@ class ParseRuleBase(ExternBase):
             try:
                 self._json_dict = json.loads(body)
             except Exception as e:
-                self.exception(e)
+                log.exception(e)
             else:
                 self._body_type = self.JSON
         else:

@@ -4,7 +4,7 @@ Created on 2017年4月18日
 
 @author: chenyitao
 '''
-
+from tddc import Task
 from ..parse_rule_base import ParseRuleBase
 
 
@@ -36,6 +36,7 @@ class CheokWantBuyList(ParseRuleBase):
                 url = base_url.format(cityAcronym=info.get('cityAcronym'),
                                       carSourceNo=info.get('carSourceNo'))
                 task = Task()
+                task.status = Task.Status.CrawlTopic
                 task.url = url
                 task.platform = self.platform
                 task.feature = 'cheok.want_buy_detail'

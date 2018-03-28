@@ -7,6 +7,7 @@ Created on 2017年4月13日
 
 import time
 
+from tddc import Task
 from ..parse_rule_base import ParseRuleBase
 
 
@@ -35,13 +36,12 @@ class CheokHomepage(ParseRuleBase):
             for page_number in range(1, last_page_number+1):
                 url = base_url % (page_number, cur_time)
                 task = Task()
+                task.status = Task.Status.CrawlTopic
                 task.url = url
                 task.platform = self.platform
                 task.feature = 'cheok.want_buy_list'
                 task.cookie = 'JSESSIONID=3A32AF91FE59B1F06A61954C280DFC12'
                 task.headers = {'Referer': 'http://www.cheok.com/car/cp_' + str(page_number - 1)}
-                self._md5_mk.update(url)
-                task.row_key = self._md5_mk.hexdigest()
                 tmp.append(task)
                 if page_number % 100 == 0 or page_number == last_page_number:
                     self.tasks.extend(tmp)

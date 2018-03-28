@@ -4,10 +4,11 @@ Created on 2017年4月13日
 
 @author: chenyitao
 '''
-
-import time
+import logging
 
 from ..parse_rule_base import ParseRuleBase
+
+log = logging.getLogger(__name__)
 
 
 class Che300PingguPage(ParseRuleBase):
@@ -26,4 +27,4 @@ class Che300PingguPage(ParseRuleBase):
 
     def _make_pinggu_task(self):
         pinggu = self._xpath('//*[@class="sp-strong"]')
-        TDDCLogging.info('che300.pinggu %s.' % ('Successed' if pinggu else 'Failed'))
+        log.info('che300.pinggu %s.' % ('Successed' if pinggu else 'Failed'))

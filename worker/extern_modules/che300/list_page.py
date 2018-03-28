@@ -5,8 +5,7 @@ Created on 2017年4月13日
 @author: chenyitao
 '''
 
-import time
-
+from tddc import Task
 from ..parse_rule_base import ParseRuleBase
 
 

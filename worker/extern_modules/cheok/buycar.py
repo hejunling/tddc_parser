@@ -6,7 +6,7 @@ Created on 2017年4月13日
 '''
 
 
-from tddc import ShortUUID, TaskStatus
+from tddc import ShortUUID, Task
 
 from ..parse_rule_base import ParseRuleBase
 
@@ -43,26 +43,24 @@ class CheokBuyCar(ParseRuleBase):
         base_url = 'http://www.cheok.com/buycar/b_0_st_0_cp_%d_pg_20/'
         for page_number in range(2, page_numbers + 1):
             url = base_url % page_number
-            task = type('TaskRecord', (), {'id': ShortUUID.UUID()})
+            task = Task()
             task.url = url
             task.platform = self.platform
             task.feature = self.feature
             task.referer = self._task.url
-            task.cur_status = TaskStatus.CrawlTopic
-            task.pre_status = task.cur_status
-            task.proxy_type = 'ADSL'
+            task.status = Task.Status.CrawlTopic
+            task.proxy = 'ADSL'
             self.tasks.append(task)
 
     def _detail_task(self):
         detail_urls = self._xpath('//*[@class="car-item"]/@href')
         for url in detail_urls:
             url = 'http://www.cheok.com%s' % url
-            task = type('TaskRecord', (), {'id': ShortUUID.UUID()})
+            task = Task()
             task.url = url
             task.platform = self.platform
             task.feature = 'cheok.car_detail'
             task.referer = self._task.url
-            task.cur_status = TaskStatus.CrawlTopic
-            task.pre_status = task.cur_status
-            task.proxy_type = 'ADSL'
+            task.status = Task.Status.CrawlTopic
+            task.proxy = 'ADSL'
             self.tasks.append(task)
