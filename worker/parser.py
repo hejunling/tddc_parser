@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 
 class Parser(object):
     '''
-    classdocs
+    数据抽取控制
     '''
 
     def __init__(self):

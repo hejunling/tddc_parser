@@ -49,7 +49,7 @@ class ParseRuleBase(ExternBase):
         self._parse()
         
     def _parse(self):
-        pass
+        raise NotImplementedError
     
     def _xpath(self, xp):
         if self._body_type == self.HTML:
