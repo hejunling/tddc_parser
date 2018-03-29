@@ -65,10 +65,8 @@ class Parser(object):
     def _push_new_task(self, task, tasks):
         if not len(tasks):
             return
-        name = '%s:%s' % (self.task_conf.record_key_base,
-                          task.platform)
-        TaskRecordManager().create_records(name, tasks)
         for new_task in tasks:
+            TaskRecordManager().create_record(new_task)
             TaskManager().push_task(new_task, self.task_conf.crawler_topic)
         log.debug('[%s:%s] Generate %d New Task.' % (task.platform,
                                                      task.id,

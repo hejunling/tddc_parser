@@ -18,7 +18,9 @@ class Che300ListPage(ParseRuleBase):
 
     feature = 'che300.list_page'
 
-    version = '1495799988'
+    version = '1495799999'
+    
+    valid = '1'
 
     def _parse(self):
         if self._xpath('//*[@class="active"]/a/text()')[0] == '1':

@@ -49,7 +49,7 @@ class CheokBuyCar(ParseRuleBase):
             task.feature = self.feature
             task.referer = self._task.url
             task.status = Task.Status.CrawlTopic
-            task.proxy = 'ADSL'
+            task.proxy = 'HTTP'
             self.tasks.append(task)
 
     def _detail_task(self):
@@ -62,5 +62,5 @@ class CheokBuyCar(ParseRuleBase):
             task.feature = 'cheok.car_detail'
             task.referer = self._task.url
             task.status = Task.Status.CrawlTopic
-            task.proxy = 'ADSL'
+            task.proxy = 'HTTP'
             self.tasks.append(task)

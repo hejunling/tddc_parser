@@ -18,6 +18,8 @@ class Che300StartPage(ParseRuleBase):
     feature = 'che300.start'
 
     version = '1495799988'
+    
+    valid = '0'
 
     def _parse(self):
         self._make_pinggu_task()
