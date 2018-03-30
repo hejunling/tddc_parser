@@ -61,6 +61,7 @@ class Parser(object):
             self._push_new_task(task, ret.tasks)
         task.status = Task.Status.ParsedSuccess
         TaskManager().task_successed(task)
+        TaskCacheManager().delete_cachce(task)
 
     def _push_new_task(self, task, tasks):
         if not len(tasks):
